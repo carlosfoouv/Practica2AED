@@ -15,29 +15,12 @@ always_allow_html: true
 lang: "es-ES"
 ---
 
-cargando librerías
-
-```{r}
-
-if (!require("pacman")) install.packages("pacman")
-
-pacman::p_load(
-  tidyverse,
-  knitr,
-  ggplot2,
-  RColorBrewer,
-  latex2exp
-)
-
-if (!require("tinytex")) install.packages("tinytex")
-
-tinytex::install_tinytex()
-
-```
-
 Ejercicio 1
 - Carga el fichero weatherAUS.RData utilizando lo aprendido en la práctica 1.
 ```{r}
+library(ggplot2)
+library(tidyverse)
+
 load("./data/weatherAUS.RData")
 #cargamos los datos en ds
 ```
