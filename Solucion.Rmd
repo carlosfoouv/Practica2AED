@@ -183,5 +183,61 @@ print(iris.grafico_final)
 ```{r}
 ggsave('./results/Ejercicio3.pdf') # se almacena el último gráfico generado
 ```
+Ejercicio 4
+
+- Carga el fichero Ejercicio4_Data.Rdata. Examina las variables que tiene dicho dataset.
+```{r}
+load("./data/Ejercicio4_Data.Rdata")
+str(DatosEjer4)
+#las variables son Fecha, Fabricante y Ventas
+```
+
+- Representa un gráfico de puntos, en el que se muestre la fecha en el eje x y las ventas en el eje y. Queremos que los datos de cada fabricante sean de un color distinto. ¿Es este gráfico válido para evaluar la evolución de las ventas de cada fabricante?
+```{r}
+grafico_puntos <- ggplot(data = DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point()
+
+print(grafico_puntos)
+#No es el más adecuado.Un gráfico compuesto únicamente por puntos en el tiempo dificulta seguir la continuidad temporal de cada empresa de forma individual, especialmente si hay muchas fechas o valores cercanos. Al tratarse de series temporales, la representación óptima sería conectar los puntos mediante líneas (geom_line()), lo cual permite observar la tendencia y otros datos.
+```
 
 
+- Representa un gráfico como el anterior en el que se muestre la línea que une los puntos que antes has representado.
+```{r}
+grafico_lineas <- ggplot(data = DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point() + geom_line()
+
+print(grafico_lineas)
+```
+
+- Modifica el gráfico anterior para que la tendencia de cada fabricante este trazada con un tipo de línea diferente.
+```{r}
+grafico_tipolinea <- ggplot(data = DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante, linetype = Fabricante)) + geom_point() + geom_line()
+
+print(grafico_tipolinea)
+```
+
+- Añade el siguiente título al gráfico “Ventas mensuales de diferentes compañías tecnológicas”.
+```{r}
+grafico_final <- grafico_tipolinea + labs( title = "Ventas mensuales de diferentes compañías tecnológicas")
+
+print(grafico_final)
+```
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio4.pdf.
+```{r}
+ggsave('./results/Ejercicio4.pdf') # se almacena el último gráfico generado
+```
+Ejercicio 5
+Añadir barras de error a un gráfico de línea.
+
+- Carga el fichero Experimento.Rdata. Examina las variables que tiene dicho dataset.
+```{r}
+load("./data/Experimento.Rdata")
+```
+
+- Representa un gráfico de puntos, en el que se muestre la Dosis en el eje x y la Altura en el eje y. Queremos que los datos de cada Complemento se representen en una línea diferente con diferentes trazos. Hazlo incluyendo las opciones de tipo de línea y forma del punto dentro del aes() de la capa ggplot.
+
+- Crea otro gráfico añadiendo al gráfico anterior barras de error en cada punto. El error viene dado por la variable Error_Altura.
+
+- Crea otro gráfico, como el anterior (idéntico), pero en este caso no puedes incluir el tipo de línea y el tipo de punto en aes() de la capa ggplot. Además queremos que la paleta de colores sea en tonos de rojos (scale_color_brewer).
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio5.pdf.
