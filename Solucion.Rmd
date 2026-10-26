@@ -232,12 +232,40 @@ Añadir barras de error a un gráfico de línea.
 - Carga el fichero Experimento.Rdata. Examina las variables que tiene dicho dataset.
 ```{r}
 load("./data/Experimento.Rdata")
+str(Experimento)
+#Complemento, Dosis, Altura y Error_Altura
 ```
 
 - Representa un gráfico de puntos, en el que se muestre la Dosis en el eje x y la Altura en el eje y. Queremos que los datos de cada Complemento se representen en una línea diferente con diferentes trazos. Hazlo incluyendo las opciones de tipo de línea y forma del punto dentro del aes() de la capa ggplot.
+```{r}
+grafico1 <- ggplot(data = Experimento,aes(x = Dosis, y = Altura, linetype = Complemento, shape = Complemento)) + geom_point() + geom_line()
+
+print(grafico1)
+```
 
 - Crea otro gráfico añadiendo al gráfico anterior barras de error en cada punto. El error viene dado por la variable Error_Altura.
+```{r}
+grafico2 <- grafico1 + geom_errorbar(aes(ymin = Altura - Error_Altura, ymax = Altura + Error_Altura), width = 0.1, position=position_dodge(0.05))
+
+print(grafico2)
+```
+
 
 - Crea otro gráfico, como el anterior (idéntico), pero en este caso no puedes incluir el tipo de línea y el tipo de punto en aes() de la capa ggplot. Además queremos que la paleta de colores sea en tonos de rojos (scale_color_brewer).
+```{r}
+#el tipo de linea lo ponemos en el aes de la capa geom_line y el de punto en geom_point
+grafico3 <- ggplot(data = Experimento, aes(x = Dosis, y = Altura, group = Complemento, color = Complemento)) +
+  geom_line(aes(linetype = Complemento)) +
+  geom_point(aes(shape = Complemento)) +
+  geom_errorbar(aes(ymin = Altura - Error_Altura, ymax = Altura + Error_Altura), width = 0.1, position=position_dodge(0.05)) +
+  scale_color_brewer(palette = "Reds")
+  
+print(grafico3)
+```
+
 
 - Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio5.pdf.
+```{r}
+ggsave('./results/Ejercicio5.pdf') # se almacena el último gráfico generado
+```
+
