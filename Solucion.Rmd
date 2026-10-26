@@ -348,4 +348,99 @@ print(grafico_violin)
 ```{r}
 ggsave('./results/Ejercicio7.pdf') # se almacena el último gráfico generado
 ```
+Ejercicio 8
+
+- Descarga de la url “http://assets.datacamp.com/blog_assets/chol.txt” el dataset de Datacamp que utilizarás para este ejercicio y cárgalo en un datafrae .
+```{r}
+url_datos <- "http://assets.datacamp.com/blog_assets/chol.txt"
+chol_df <- read.table(url_datos, header = TRUE, sep = " ")
+```
+
+- Representa el histograma de la variable HEIGHT del dataframe cargado del fichero anterior.
+```{r}
+grafico_hist <- ggplot(data = chol_df, aes(x = HEIGHT)) +
+  geom_histogram()
+
+print(grafico_hist)
+```
+
+
+- Añade título (“Histograma de la variable Altura”), una etiqueta en el eje x (“Altura (cm)”) y una etiqueta en el eje y (“Frecuencia”).
+```{r}
+grafico_hist <- grafico_hist + 
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+    )
+print(grafico_hist)
+```
+
+
+- Ajusta el rango de representación entre 155 y 195, además fuerza que el histograma tenga 20 bins.(usa parámetro breaks)
+```{r}
+cortes <- seq(155, 195, length.out = 21)
+
+grafico_hist <- ggplot(data = chol_df, aes(x = HEIGHT)) +
+  geom_histogram(breaks = cortes) +
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+  )
+
+print(grafico_hist)
+```
+
+
+- Haz que las barras del histograma sean de color azul con una grado de transparencia del 50% y el contorno de color rojo.
+```{r}
+grafico_hist <- ggplot(data = chol_df, aes(x = HEIGHT)) +
+  geom_histogram(
+    breaks = cortes,
+    fill = "blue",
+    alpha = 0.5,
+    color = "red"
+  ) +
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+  )
+
+print(grafico_hist)
+```
+
+- Añade la curva de distribución estimada de color verde.
+```{r}
+#se añade a geom_histogram la y para escalar los datos y que la funcion de probabilidad no se vea muy aplastada
+grafico_hist <- ggplot(data = chol_df, aes(x = HEIGHT)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    breaks = cortes,
+    fill = "blue",
+    alpha = 0.5,
+    color = "red"
+  ) +
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+  ) + geom_density(color = "green")
+print(grafico_hist)
+```
+
+- Representa el mismo histograma del apartado anterior para cada valor de la variable MORT, recuerda utilizar la función facet_grid().
+```{r}
+grafico_final <- grafico_hist +
+  facet_grid(. ~ MORT)
+
+print(grafico_final)
+```
+
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio8.pdf.
+```{r}
+ggsave('./results/Ejercicio8.pdf') # se almacena el último gráfico generado
+```
 
