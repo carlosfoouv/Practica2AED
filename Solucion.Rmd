@@ -15,3 +15,87 @@ always_allow_html: true
 lang: "es-ES"
 ---
 
+cargando librerías
+
+```{r}
+
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(
+  tidyverse,
+  knitr,
+  ggplot2,
+  RColorBrewer,
+  latex2exp
+)
+
+if (!require("tinytex")) install.packages("tinytex")
+
+tinytex::install_tinytex()
+
+```
+
+Ejercicio 1
+- Carga el fichero weatherAUS.RData utilizando lo aprendido en la práctica 1.
+```{r}
+load("./data/weatherAUS.RData")
+#cargamos los datos en ds
+```
+
+
+- Crea un objeto ggplot denominado grafico1 en el que esté definido el conjunto de datos ds alojado en el fichero
+weatherAUS.RData y un aesthetics en el que en el eje x esté definida la variable MinTemp y en el eje y esté definida la variable MaxTemp
+```{r}
+grafico1 <- ggplot(data = ds, aes(x = MinTemp, y = MaxTemp))
+```
+
+- Añade una capa que defina el objeto geométrico necesario para construir un gráfico de dispersión de las variables MinTemp y MaxTemp.
+```{r}
+grafico1 <- grafico1 + geom_point()
+#en ggplot se suman los gráficos para ir añadiendo capas
+#lo visualizamos
+print(grafico1)
+```
+
+- Genera ahora el mismo gráfico y almacénalo en grafico2 pero define el aesthetics para visualizar las variables MinTemp y MaxTemp en los ejes de la gráfica y la variable categórica RainTomorrow como el color. A partir del objeto grafico2, representa un gráfico de dispersión en el que se muestren los puntos con el color del punto correspondiente a la variable RainTomorrow.
+```{r}
+#igual que antes pero con la opcion color
+grafico2 <- ggplot(data = ds, aes(x = MinTemp, y = MaxTemp, color = RainTomorrow)) + geom_point()
+print(grafico2)
+```
+
+- Añade a grafico2 una capa para incluir un título con ggtitle() y almacénalo en grafico3.
+
+```{r}
+grafico3 <- grafico2 + ggtitle("Relación entre la temperatura mínima y máxima según si llueve mañana")
+print(grafico3)
+```
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio1.pdf.
+```{r}
+ggsave('./results/Ejercicio1.pdf')
+```
+
+Ejercicio 2
+
+- Utilizando ggplot haz un grafico de dispersión en el que representes las variables Temp9am y Pressure9am en los ejes x e y respectivamente.
+```{r}
+graficoEj2 <- ggplot(data = ds, aes(x = Temp9am, y = Pressure9am)) +
+  geom_point()
+
+print(graficoEj2)
+```
+
+- Modifica el gráfico anterior para incluir información categórica proporcionada por la variable RainToday con la forma del punto.
+```{r}
+graficoEj2 <- ggplot(data = ds, aes(x = Temp9am, y = Pressure9am, shape = RainToday)) +
+  geom_point()
+
+print(graficoEj2)
+```
+
+- Modifica el gráfico anterior para incluir información categórica proporcionada por la variable RainToday con el color del punto. ¿Con qué representación (color o forma) se observa mejor la información que introduce la variable RainToday?
+
+- Añade títulos explicativos al gráfico anterior (debe aparece un título, subtítulo, leyendas e información de las variables representadas en los ejes).
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio2.pdf.
