@@ -125,17 +125,63 @@ ggsave('./results/Ejercicio2.pdf')
 Ejercicio 3
 
 - Carga el fichero iris.tidy.Rdata utilizando lo aprendido en la práctica 1.
+```{r}
+load("./data/iris_tidy.Rdata")
+
+```
 
 - Utiliza la función str() para ver qué variables contiene el dataset.
+```{r}
+str(iris.tidy)
+#Species, Part, Measure, Value
+```
+
 
 - Crea un objeto ggplot denominado iris.grafico1 en el que esté definido el conjunto de datos iris.tidy alojado en el fichero iris.tidy.RData y un aesthetics en el que en el eje x esté definida la variable Species y en el eje y esté definida la variable Value.
+```{r}
+iris.grafico1 <- ggplot(data = iris.tidy, aes(x = Species, y = Value))
+```
+
 
 - Añade una capa que defina el objeto geométrico necesario para construir un gráfico de dispersión de las variables Species y Value.
+```{r}
+iris.grafico1 <- iris.grafico1 + geom_point()
+print(iris.grafico1)
+```
+
 
 - Modifica el aesthetics de iris.grafico1 para visualizar la variable categórica Part y almacénalo en iris.grafico2. A partir del objeto iris.grafico2, representa un gráfico de dispersión en el que se muestren los puntos dados por las variables Species y Value, y el color del punto se corresponda con el valor de la variable Part.
+```{r}
+iris.grafico2 <- ggplot(data = iris.tidy, aes(x = Species, y = Value, color = Part)) + geom_point()
+print(iris.grafico2)
+```
+
 
 - Incluye información de la variable Measure haciendo dos gráficos de dispersión (dispuestos en filas) con facet_grid(), como en el apartado de introducción, para los dos valores que toma la variable Measure. Prueba a cambiar la disposición de los gráficos para que sea en columnas ¿Qué disposición, en filas o en columnas, permite comparar mejor los valores de las dos variables?
+```{r}
+# Disposición en filas (Measure ~ .)
+grafico_filas <- iris.grafico2 + facet_grid(Measure ~ .)
+print(grafico_filas)
+
+# Disposición en columnas (. ~ Measure)
+grafico_columnas <- iris.grafico2 + facet_grid(. ~ Measure)
+print(grafico_columnas)
+
+#A mi parecer la disposición en columnas es mejor porque hay menos solapamiento
+```
 
 - Cambia ahora la capa geom_point() del gráfico anterior por la capa geom_jitter(). ¿Qué diferencia observas?
+```{r}
+iris.grafico_final <- ggplot(data = iris.tidy, aes(x = Species, y = Value, color = Part)) +
+  geom_jitter()
+print(iris.grafico_final)
+#Con geom_jitter() se añade una pequeña variación o ruido aleatorio a la posición de los puntos, separándolos visualmente y permitiendo apreciar con mucha mayor claridad cuántas muestras hay y cómo se concentran.
+```
+
 
 - Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio3.pdf.
+```{r}
+ggsave('./results/Ejercicio3.pdf') # se almacena el último gráfico generado
+```
+
+
