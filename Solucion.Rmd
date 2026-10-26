@@ -95,7 +95,47 @@ print(graficoEj2)
 ```
 
 - Modifica el gráfico anterior para incluir información categórica proporcionada por la variable RainToday con el color del punto. ¿Con qué representación (color o forma) se observa mejor la información que introduce la variable RainToday?
+```{r}
+graficoEj2 <- ggplot(data = ds, aes(x = Temp9am, y = Pressure9am, color = RainToday)) +
+  geom_point()
+
+print(graficoEj2)
+#Con al representacion a color se observa mucho mejor la diferencia ya que hay mucho solpamiento
+```
 
 - Añade títulos explicativos al gráfico anterior (debe aparece un título, subtítulo, leyendas e información de las variables representadas en los ejes).
+```{r}
+graficoEj2 <- graficoEj2+
+  labs(
+    title = "Relación entre Temperatura y Presión Atmosférica a las 9:00 AM",
+    subtitle = "Datos según la presencia de lluvia en el día actual (RainToday)",
+    x = "Temperatura a las 9:00 AM (°C)",
+    y = "Presión Atmosférica a las 9:00 AM (hPa)",
+    color = "¿lluvia hoy?"
+  )
+
+print(graficoEj2)
+```
 
 - Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio2.pdf.
+```{r}
+ggsave('./results/Ejercicio2.pdf')
+```
+
+Ejercicio 3
+
+- Carga el fichero iris.tidy.Rdata utilizando lo aprendido en la práctica 1.
+
+- Utiliza la función str() para ver qué variables contiene el dataset.
+
+- Crea un objeto ggplot denominado iris.grafico1 en el que esté definido el conjunto de datos iris.tidy alojado en el fichero iris.tidy.RData y un aesthetics en el que en el eje x esté definida la variable Species y en el eje y esté definida la variable Value.
+
+- Añade una capa que defina el objeto geométrico necesario para construir un gráfico de dispersión de las variables Species y Value.
+
+- Modifica el aesthetics de iris.grafico1 para visualizar la variable categórica Part y almacénalo en iris.grafico2. A partir del objeto iris.grafico2, representa un gráfico de dispersión en el que se muestren los puntos dados por las variables Species y Value, y el color del punto se corresponda con el valor de la variable Part.
+
+- Incluye información de la variable Measure haciendo dos gráficos de dispersión (dispuestos en filas) con facet_grid(), como en el apartado de introducción, para los dos valores que toma la variable Measure. Prueba a cambiar la disposición de los gráficos para que sea en columnas ¿Qué disposición, en filas o en columnas, permite comparar mejor los valores de las dos variables?
+
+- Cambia ahora la capa geom_point() del gráfico anterior por la capa geom_jitter(). ¿Qué diferencia observas?
+
+- Almacena en formato pdf el gráfico resultante en un fichero denominado Ejercicio3.pdf.
